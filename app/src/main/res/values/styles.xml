@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FormLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_form_label</item>
+        <item name="android:textColor">@color/field_label</item>
+    </style>
+
+    <style name="FormField">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_form_label</item>
+    </style>
+</resources>

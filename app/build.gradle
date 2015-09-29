@@ -1,0 +1,91 @@
+import com.android.build.gradle.tasks.Dex
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.android.databinding'
+apply plugin: 'com.neenbedankt.android-apt'
+
+def AAVersion = '3.3.2'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "de.moserp.inventory"
+        minSdkVersion 18
+        targetSdkVersion 23
+        versionName "1.0"
+        versionCode 1
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dexOptions {
+        preDexLibraries = false
+    }
+    project.tasks.withType(Dex) {
+        additionalParameters=['--core-library']
+    }
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/notice.txt'
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
+        logLevel 'TRACE'
+    }
+}
+
+dependencies {
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    // UI libraries
+    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'com.android.support:cardview-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+    //compile 'com.android.support:palette-v7:23.0.0'
+    //compile 'com.android.support:gridlayout-v7:23.0.0'
+
+    // Spring and Rest
+    compile('org.springframework.hateoas:spring-hateoas:0.17.0.RELEASE') {
+        exclude group: '*'
+    }
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+
+    // ZXing Scanner Lib
+    compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    compile 'com.google.zxing:core:3.2.0'
+
+    // Frameworks - general
+    apt 'com.android.databinding:compiler:1.0-rc2'
+//    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
+
+    // Test
+    androidTestCompile 'com.android.support.test:runner:0.4'
+    androidTestCompile 'com.android.support.test:rules:0.4'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+}
+
+repositories {
+    maven {
+        url 'http://repo.spring.io/milestone'
+    }
+
+}
