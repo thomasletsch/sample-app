@@ -73,7 +73,7 @@ dependencies {
 
     // Frameworks - general
     apt 'com.android.databinding:compiler:1.0-rc2'
-//    apt "org.androidannotations:androidannotations:$AAVersion"
+    apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
 
     // Test
